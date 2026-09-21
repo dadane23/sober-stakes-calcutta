@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#07111b">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>2026 Sober Stakes Calcutta Command Center</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="container">
+<section class="hero">
+<div class="kicker">🏈 2026 Sober Stakes Calcutta</div>
+<h1>League Command Center</h1>
+<p class="sub"><strong>Welcome, degenerates.</strong> We beat alcoholism; apparently we still needed somewhere to make irresponsible decisions with spreadsheets. This dashboard tracks every auction lot, every owner, playoff-path probability, payout value and the weekly swings that decide who gets to talk trash in January.</p>
+<div class="notice"><strong>How to use it:</strong> Choose your name to isolate your portfolio. The football marker shows each lot's modeled CFP berth probability. Use the simulator to test future wins/losses and see the estimated probability and payout value change instantly. League View shows everyone.</div>
+<div class="grid4">
+<div class="metric"><span class="muted">Final pot</span><b>$36,520</b></div>
+<div class="metric"><span class="muted">Lots sold</span><b>36 / 36</b></div>
+<div class="metric"><span class="muted">Participants</span><b>12</b></div>
+<div class="metric"><span class="muted">Data through</span><b>Sep. 19</b></div>
+</div>
+</section>
+
+<div class="toolbar">
+<div><label for="ownerFilter">Portfolio filter</label><select id="ownerFilter"></select></div>
+<div><label for="teamSearch">Team search</label><input id="teamSearch" placeholder="Search team..."></div>
+<div><label for="sortBy">Sort team cards</label><select id="sortBy"><option value="prob">CFP probability</option><option value="rank">AP rank</option><option value="bid">Auction bid</option><option value="team">Team name</option></select></div>
+<button id="resetBtn" type="button">Reset view</button>
+</div>
+
+<div id="portfolioSummary" class="owner-summary"></div>
+<div id="mobileOwnerBanner" class="mobile-owner-banner"></div>
+
+<div class="section-title">
+<div><div class="kicker">Team tracker</div><h2>CFP berth probability</h2></div>
+<div class="legend">Schedule risk: ● easy → ●●●●● brutal</div>
+</div>
+<div id="teamGrid" class="teams"></div>
+
+<div class="section-title">
+<div><div class="kicker">League view</div><h2>Owner leaderboard</h2></div>
+<div class="legend">Expected payout uses ownership-adjusted modeled probabilities.</div>
+</div>
+<div class="two-col">
+<div class="panel">
+<div class="table-wrap leader-desktop"><table><thead><tr><th>Owner</th><th>Teams</th><th class="num">Invested</th><th class="num">Modeled EV</th><th class="num">EV vs cost</th><th class="num">Any CFP cash</th></tr></thead><tbody id="leaderRows"></tbody></table></div>
+<div id="ownerMobileCards" class="owner-mobile-cards"></div>
+</div>
+<div class="panel">
+<div class="kicker">Payout ladder</div><h2>Official $36,520 pot</h2>
+<table class="payout"><tbody>
+<tr><td>National Champion</td><td class="num"><b>$13,147.20</b></td><td class="num">36%</td></tr>
+<tr><td>Runner-up</td><td class="num">$5,478.00</td><td class="num">15%</td></tr>
+<tr><td>Semifinal loss</td><td class="num">$2,921.60</td><td class="num">8%</td></tr>
+<tr><td>Quarterfinal loss</td><td class="num">$1,552.10</td><td class="num">4.25%</td></tr>
+<tr><td>First-round loss</td><td class="num">$1,095.60</td><td class="num">3%</td></tr>
+<tr><td>Side payout</td><td class="num">$730.40</td><td class="num">2%</td></tr>
+</tbody></table>
+</div>
+</div>
+
+<div class="section-title">
+<div><div class="kicker">What-if lab</div><h2>Calcutta simulator</h2></div>
+<div class="legend">Planning model only — not sportsbook odds.</div>
+</div>
+<div class="panel">
+<div class="notice no-top"><strong>Simulator:</strong> Select any auction lot, then add hypothetical future wins/losses. Conference results carry extra weight, and a harder remaining schedule dampens the probability boost.</div>
+<div class="sim-grid">
+<div class="sim-box">
+<label for="simTeam">Team / lot</label><select id="simTeam"></select>
+<label for="simWins">Future wins</label><input id="simWins" type="number" value="0" min="0" max="10">
+<label for="simLosses">Future losses</label><input id="simLosses" type="number" value="0" min="0" max="10">
+<label for="simConfWins">Future conference wins</label><input id="simConfWins" type="number" value="0" min="0" max="9">
+<label for="simConfLosses">Future conference losses</label><input id="simConfLosses" type="number" value="0" min="0" max="9">
+<label for="simSched">Remaining schedule difficulty</label><select id="simSched"><option value="1">1 — Easy</option><option value="2">2 — Favorable</option><option value="3">3 — Average</option><option value="4">4 — Hard</option><option value="5">5 — Brutal</option></select>
+</div>
+<div class="sim-box">
+<div class="muted small">Modeled CFP berth probability</div><div id="simProb" class="sim-out">—</div>
+<div class="muted small">Full-lot modeled payout EV</div><div id="simEV" class="sim-out">—</div>
+<div class="muted small">Change vs current model</div><div id="simDelta" class="sim-out">—</div>
+<div id="simOwners" class="small muted sim-owner-note"></div>
+</div>
+</div>
+</div>
+
+<details><summary>Definitions & methodology</summary>
+<div class="footnote">
+<p><b>CFP berth probability</b> is a transparent Calcutta planning estimate — not a betting-market or committee forecast. It uses current AP position/votes, overall record, conference record, and a 1–5 remaining-schedule risk factor. Notre Dame and Boise receive model adjustments for the special paths described in the auction rules.</p>
+<p><b>Team Model EV</b> means estimated gross payout value from the modeled probability of reaching each CFP round, before subtracting auction cost. <b>Owner EV</b> multiplies that by the participant's ownership share. Multi-owner bids are split equally unless explicitly corrected; Georgia is set to Dagem/John 50/50.</p>
+<p><b>Any CFP cash</b> estimates the chance that at least one known team in that owner's portfolio earns a playoff payout. The Field is treated as an aggregate lot and cannot be simulated like a single team.</p>
+</div></details>
+
+<details><summary>Source notes</summary>
+<div class="footnote"><p>Ownership, bids and the $36,520 final pot come from the 2026 Calcutta Results workbook, with the confirmed Georgia correction to Dagem/John 50/50. Payout percentages and special CFP rules come from the 2026 Sober Stakes Auction Program. Current rankings and weekly notes are refreshed as the dashboard is updated.</p></div>
+</details>
+</div>
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
