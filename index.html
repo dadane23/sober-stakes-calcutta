@@ -14,12 +14,12 @@
 <div class="kicker">🏈 2026 Sober Stakes Calcutta</div>
 <h1>League Command Center</h1>
 <p class="sub"><strong>Welcome, degenerates.</strong> We beat alcoholism; apparently we still needed somewhere to make irresponsible decisions with spreadsheets. This dashboard tracks every auction lot, every owner, playoff-path probability, payout value and the weekly swings that decide who gets to talk trash in January.</p>
-<div class="notice"><strong>How to use it:</strong> Choose your name to isolate your portfolio. The football marker shows each lot's modeled CFP berth probability. Use the simulator to test future wins/losses and see the estimated probability and payout value change instantly. League View shows everyone.</div>
+<div class="notice"><strong>How to use it:</strong> Choose your name to isolate your portfolio. The football marker shows ESPN FPI's probability of making the CFP. Use the simulator to test future wins/losses from that baseline and see the estimated probability and payout value change instantly. League View shows everyone.</div>
 <div class="grid4">
 <div class="metric"><span class="muted">Final pot</span><b>$36,520</b></div>
 <div class="metric"><span class="muted">Lots sold</span><b>36 / 36</b></div>
 <div class="metric"><span class="muted">Participants</span><b>12</b></div>
-<div class="metric"><span class="muted">Data through</span><b>Sep. 19</b></div>
+<div class="metric"><span class="muted">Data through</span><b id="dataThrough">Sep. 19</b></div>
 </div>
 </section>
 
@@ -34,18 +34,19 @@
 <div id="mobileOwnerBanner" class="mobile-owner-banner"></div>
 
 <div class="section-title">
-<div><div class="kicker">Team tracker</div><h2>CFP berth probability</h2></div>
+<div><div class="kicker">Team tracker</div><h2>ESPN FPI playoff probability</h2></div>
 <div class="legend">Schedule risk: ● easy → ●●●●● brutal</div>
 </div>
 <div id="teamGrid" class="teams"></div>
 
 <div class="section-title">
-<div><div class="kicker">League view</div><h2>Owner leaderboard</h2></div>
-<div class="legend">Expected payout uses ownership-adjusted modeled probabilities.</div>
+<div><div class="kicker">Weekly standings</div><h2>Calcutta leaderboard</h2></div>
+<div class="legend">Ranked by ownership-adjusted modeled payout EV. Movement compares with the prior Monday snapshot.</div>
 </div>
 <div class="two-col">
 <div class="panel">
-<div class="table-wrap leader-desktop"><table><thead><tr><th>Owner</th><th>Teams</th><th class="num">Invested</th><th class="num">Modeled EV</th><th class="num">EV vs cost</th><th class="num">Any CFP cash</th></tr></thead><tbody id="leaderRows"></tbody></table></div>
+<div id="leaderboardAsOf" class="leaderboard-as-of muted"></div>
+<div class="table-wrap leader-desktop"><table class="leaderboard-table"><thead><tr><th class="num">Rank</th><th>Participant</th><th>Movement</th><th>Teams owned</th><th class="num">Total invested</th><th class="num">Modeled payout EV</th><th class="num">EV vs cost</th><th class="num">At least one CFP payout</th></tr></thead><tbody id="leaderRows"></tbody></table></div>
 <div id="ownerMobileCards" class="owner-mobile-cards"></div>
 </div>
 <div class="panel">
@@ -77,7 +78,7 @@
 <label for="simSched">Remaining schedule difficulty</label><select id="simSched"><option value="1">1 — Easy</option><option value="2">2 — Favorable</option><option value="3">3 — Average</option><option value="4">4 — Hard</option><option value="5">5 — Brutal</option></select>
 </div>
 <div class="sim-box">
-<div class="muted small">Modeled CFP berth probability</div><div id="simProb" class="sim-out">—</div>
+<div class="muted small">Scenario CFP probability</div><div id="simProb" class="sim-out">—</div>
 <div class="muted small">Full-lot modeled payout EV</div><div id="simEV" class="sim-out">—</div>
 <div class="muted small">Change vs current model</div><div id="simDelta" class="sim-out">—</div>
 <div id="simOwners" class="small muted sim-owner-note"></div>
@@ -87,16 +88,17 @@
 
 <details><summary>Definitions & methodology</summary>
 <div class="footnote">
-<p><b>CFP berth probability</b> is a transparent Calcutta planning estimate — not a betting-market or committee forecast. It uses current AP position/votes, overall record, conference record, and a 1–5 remaining-schedule risk factor. Notre Dame and Boise receive model adjustments for the special paths described in the auction rules.</p>
-<p><b>Team Model EV</b> means estimated gross payout value from the modeled probability of reaching each CFP round, before subtracting auction cost. <b>Owner EV</b> multiplies that by the participant's ownership share. Multi-owner bids are split equally unless explicitly corrected; Georgia is set to Dagem/John 50/50.</p>
-<p><b>Any CFP cash</b> estimates the chance that at least one known team in that owner's portfolio earns a playoff payout. The Field is treated as an aggregate lot and cannot be simulated like a single team.</p>
+<p><b>ESPN FPI playoff probability</b> is ESPN's published chance that a team makes the College Football Playoff. ESPN says its projections use 20,000 simulations of the rest of the season based on FPI, results to date and the remaining schedule. The Field is an auction-specific bundle, so its displayed probability combines the individual ESPN playoff chances for every FPI team outside the 35 named lots using an independence approximation.</p>
+<p><b>Team Model EV</b> means estimated gross payout value from the modeled probability of reaching each CFP round, before subtracting auction cost. <b>Owner EV</b> multiplies that by the participant's ownership share. Ownership percentages follow the updated results workbook; entries using a double slash assign 50% to the first owner and split the remaining 50% among the other listed owners.</p>
+<p><b>Probability of at least one CFP payout</b> estimates the chance that at least one known team in that participant's portfolio earns a playoff payout. <b>Weekly movement</b> compares the participant's current EV rank with the most recent prior Monday snapshot. The Field is treated as an aggregate lot and cannot be simulated like a single team.</p>
 </div></details>
 
 <details><summary>Source notes</summary>
-<div class="footnote"><p>Ownership, bids and the $36,520 final pot come from the 2026 Calcutta Results workbook, with the confirmed Georgia correction to Dagem/John 50/50. Payout percentages and special CFP rules come from the 2026 Sober Stakes Auction Program. Current rankings and weekly notes are refreshed as the dashboard is updated.</p></div>
+<div class="footnote"><p>Ownership, bids and the $36,520 final pot come from the updated 2026 Calcutta Results workbook. Dagem's share remains 50% on split lots, including Georgia and Miami. Payout percentages and special CFP rules come from the 2026 Sober Stakes Auction Program. CFP probabilities, conference affiliations and team logos come from <a href="https://www.espn.com/college-football/fpi">ESPN FPI</a>, last updated September 22, 2026. Logo files are stored with the dashboard for reliable loading. Current rankings and weekly notes are refreshed as the dashboard is updated.</p></div>
 </details>
 </div>
 <script src="data.js"></script>
+<script src="leaderboard-history.js"></script>
 <script src="app.js"></script>
 </body>
 </html>
