@@ -18,5 +18,23 @@ const LEADERBOARD_SNAPSHOTS=[
       {owner:"Brent S",rank:11,invested:1025,modeledPayoutEV:540.48,evVsCost:-484.52,anyCfpPayoutProbability:69.25},
       {owner:"Jordan",rank:12,invested:300,modeledPayoutEV:282.04,evVsCost:-17.96,anyCfpPayoutProbability:24.3}
     ]
+  },
+  {
+    week:"2026-09-28",
+    dataThrough:"2026-09-26",
+    participants:[
+      {owner:"John",rank:1,invested:4320.83,modeledPayoutEV:5346.83,evVsCost:1026.00,anyCfpPayoutProbability:99.99},
+      {owner:"Robert A",rank:2,invested:4750,modeledPayoutEV:4229.49,evVsCost:-520.51,anyCfpPayoutProbability:96.64},
+      {owner:"Bob",rank:3,invested:3245.83,modeledPayoutEV:4069.28,evVsCost:823.45,anyCfpPayoutProbability:99.96},
+      {owner:"Freddie",rank:4,invested:4525,modeledPayoutEV:4011.40,evVsCost:-513.60,anyCfpPayoutProbability:98.43},
+      {owner:"Dagem",rank:5,invested:4400,modeledPayoutEV:3491.86,evVsCost:-908.14,anyCfpPayoutProbability:98.56},
+      {owner:"Jake",rank:6,invested:3770.83,modeledPayoutEV:2959.11,evVsCost:-811.72,anyCfpPayoutProbability:99.44},
+      {owner:"Adam",rank:7,invested:4125,modeledPayoutEV:2463.57,evVsCost:-1661.43,anyCfpPayoutProbability:77.51},
+      {owner:"Ralph",rank:8,invested:1300,modeledPayoutEV:2059.52,evVsCost:759.52,anyCfpPayoutProbability:72.70},
+      {owner:"Josh B",rank:9,invested:2495,modeledPayoutEV:1092.28,evVsCost:-1402.72,anyCfpPayoutProbability:44.16},
+      {owner:"Dave G",rank:10,invested:2262.5,modeledPayoutEV:771.47,evVsCost:-1491.03,anyCfpPayoutProbability:59.94},
+      {owner:"Brent S",rank:11,invested:1025,modeledPayoutEV:521.33,evVsCost:-503.67,anyCfpPayoutProbability:69.12},
+      {owner:"Jordan",rank:12,invested:300,modeledPayoutEV:66.03,evVsCost:-233.97,anyCfpPayoutProbability:6.10}
+    ]
   }
 ];
